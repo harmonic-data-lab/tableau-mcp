@@ -1,4 +1,5 @@
 import { Zodios } from '@zodios/core';
+import { AxiosRequestConfig } from 'axios';
 
 import { workbooksApis } from '../apis/workbooksApi.js';
 import { Credentials } from '../types/credentials.js';
@@ -14,8 +15,14 @@ import AuthenticatedMethods from './authenticatedMethods.js';
  * @link https://help.tableau.com/current/api/rest_api/en-us/REST/rest_api_ref_workbooks_and_views.htm
  */
 export default class WorkbooksMethods extends AuthenticatedMethods<typeof workbooksApis> {
-  constructor(baseUrl: string, creds: Credentials) {
-    super(new Zodios(baseUrl, workbooksApis), creds);
+  constructor(baseUrl: string, creds: Credentials, axiosConfig?: Partial<AxiosRequestConfig>) {
+    const zodiosClient = new Zodios(baseUrl, workbooksApis);
+
+    if (axiosConfig) {
+      Object.assign(zodiosClient.axios.defaults, axiosConfig);
+    }
+
+    super(zodiosClient, creds);
   }
 
   /**

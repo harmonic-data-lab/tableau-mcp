@@ -1,4 +1,5 @@
 import { Zodios } from '@zodios/core';
+import { AxiosRequestConfig } from 'axios';
 
 import { contentExplorationApis } from '../apis/contentExplorationApi.js';
 import { SearchContentResponse } from '../types/contentExploration.js';
@@ -15,8 +16,14 @@ import AuthenticatedMethods from './authenticatedMethods.js';
 export default class ContentExplorationMethods extends AuthenticatedMethods<
   typeof contentExplorationApis
 > {
-  constructor(baseUrl: string, creds: Credentials) {
-    super(new Zodios(baseUrl, contentExplorationApis), creds);
+  constructor(baseUrl: string, creds: Credentials, axiosConfig?: Partial<AxiosRequestConfig>) {
+    const zodiosClient = new Zodios(baseUrl, contentExplorationApis);
+
+    if (axiosConfig) {
+      Object.assign(zodiosClient.axios.defaults, axiosConfig);
+    }
+
+    super(zodiosClient, creds);
   }
 
   /**

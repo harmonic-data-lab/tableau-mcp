@@ -1,4 +1,5 @@
 import { isErrorFromAlias, Zodios, ZodiosError } from '@zodios/core';
+import { AxiosRequestConfig } from 'axios';
 import { Err, Ok, Result } from 'ts-results-es';
 import { z } from 'zod';
 
@@ -24,8 +25,14 @@ import AuthenticatedMethods from './authenticatedMethods.js';
 export default class VizqlDataServiceMethods extends AuthenticatedMethods<
   typeof vizqlDataServiceApis
 > {
-  constructor(baseUrl: string, creds: Credentials) {
-    super(new Zodios(baseUrl, vizqlDataServiceApis), creds);
+  constructor(baseUrl: string, creds: Credentials, axiosConfig?: Partial<AxiosRequestConfig>) {
+    const zodiosClient = new Zodios(baseUrl, vizqlDataServiceApis);
+
+    if (axiosConfig) {
+      Object.assign(zodiosClient.axios.defaults, axiosConfig);
+    }
+
+    super(zodiosClient, creds);
   }
 
   /**

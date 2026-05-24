@@ -15,7 +15,12 @@
         "EXCLUDE_TOOLS": "",
         "MAX_RESULT_LIMIT": "",
         "DISABLE_QUERY_DATASOURCE_FILTER_VALIDATION": "",
-        "DISABLE_METADATA_API_REQUESTS": ""
+        "DISABLE_METADATA_API_REQUESTS": "",
+        "HTTP_PROXY": "http://my-proxy-server.com:8080",
+        "HTTPS_PROXY": "https://my-proxy-server.com:8080",
+        "NO_PROXY": "localhost,127.0.0.1",
+        "PROXY_CA_CERT_PATH": "/path/to/ca-cert.pem",
+        "PROXY_REJECT_UNAUTHORIZED": "false"
       }
     }
   }
